@@ -15,11 +15,25 @@ export = () => {
         .validator([ResolutionCreateValidator.handle]);
       //.middleware([DefaultAuth.handle]);
 
+      route.post(
+        "/update",
+        ResolutionController.update,
+        "ResolutionController.update"
+      );
+      //.validator([OrdinanceCreateValidator.handle]);
+
+      route.put(
+        "/delete",
+        ResolutionController.delete,
+        "ResolutionController.delete"
+      );
+
       route.get(
         "/all",
         ResolutionController.getAll,
         "ResolutionController.getAll"
       );
+
       //.middleware([DefaultAuth.handle]);
 
       // route.get(

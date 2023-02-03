@@ -35,11 +35,11 @@ export = () => {
       );
       //.middleware([DefaultAuth.handle]);
 
-      route.get(
-        "/seed",
-        OrdinanceController.seedOrdinance,
-        "OrdinanceController.getAll"
-      );
+      // route.get(
+      //   "/seed",
+      //   OrdinanceController.seedOrdinance,
+      //   "OrdinanceController.getAll"
+      // );
     })
     .prefix("/ordinance")
     .namespace("ordinance/controller");

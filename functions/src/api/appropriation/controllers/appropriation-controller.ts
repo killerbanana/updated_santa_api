@@ -1,22 +1,22 @@
 import { Request, Response } from "express";
-import OrdinanceService from "../services/ordinance-service";
+import AppropriationService from "../services/appropriation-service";
 import PaginationQuery from "src/core/types/pagination-query";
 //import Joi from "joi";
 
-class OrdinanceController {
+class AppropriationController {
   static async create(req: Request, res: Response) {
     const { data } = req.body;
     try {
-      const result = await OrdinanceService.create(data);
+      const result = await AppropriationService.create(data);
       return res.status(200).json({
         status: 200,
-        message: "Ordinances",
+        message: "appropriations",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Ordinances",
+        message: "appropriations",
         data: error,
       });
     }
@@ -27,16 +27,16 @@ class OrdinanceController {
     const { id } = req.query;
     const _id = id as string;
     try {
-      const result = await OrdinanceService.update(data, _id);
+      const result = await AppropriationService.update(data, _id);
       return res.status(200).json({
         status: 200,
-        message: "Updated ordinance",
+        message: "Updated appropriation",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Failed to update ordinances",
+        message: "Failed to update appropriations",
         data: error,
       });
     }
@@ -47,16 +47,16 @@ class OrdinanceController {
     const _id = id as string;
     console.log(id);
     try {
-      const result = await OrdinanceService.delete(_id);
+      const result = await AppropriationService.delete(_id);
       return res.status(200).json({
         status: 200,
-        message: "Deleted ordinance",
+        message: "Deleted appropriation",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Failed to delete ordinance",
+        message: "Failed to delete appropriation",
         data: error,
       });
     }
@@ -77,28 +77,28 @@ class OrdinanceController {
     }
 
     try {
-      const result = await OrdinanceService.getAll(pagination);
+      const result = await AppropriationService.getAll(pagination);
       return res.status(200).json({
         status: 200,
-        message: "Ordinances",
+        message: "appropriations",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Error getting ordinance",
+        message: "Error getting appropriation",
         data: error,
       });
     }
   }
 
-  // static async seedOrdinance(req: Request, res: Response) {
-  //   var ordinance = [];
-  //   for (const ordi of ORDINANCES) {
-  //     const cashloanRef = await OrdinanceMethods.createRef();
-  //     const ordinanceData = new OrdinanceBuilder({
+  // static async seedappropriation(req: Request, res: Response) {
+  //   var appropriation = [];
+  //   for (const ordi of APPROPRIATIONS) {
+  //     const cashloanRef = await AppropriationMethods.createRef();
+  //     const appropriationData = new AppropriationBuilder({
   //       id: cashloanRef.doc.id,
-  //       ordinanceNumber: ordi.OrdinanceNumber.toString(),
+  //       appropriationNumber: ordi.AppropriationNumber.toString(),
   //       series: ordi.Series.toString(),
   //       date: ordi.Date,
   //       title: ordi.Title,
@@ -112,15 +112,15 @@ class OrdinanceController {
   //       created: ordi.Created,
   //       updated: ordi.Created,
   //     });
-  //     ordinance.push(ordinanceData);
+  //     appropriation.push(appropriationData);
   //   }
-  //   const result = await OrdinanceService.seed(ordinance);
+  //   const result = await AppropriationService.seed(appropriation);
   //   return res.status(200).json({
   //     status: 200,
-  //     message: "Ordinances Seeded",
+  //     message: "appropriations Seeded",
   //     data: result,
   //   });
   // }
 }
 
-export default OrdinanceController;
+export default AppropriationController;

@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import ResolutionService from "../services/reso-service";
 import PaginationQuery from "src/core/types/pagination-query";
-
-//import ResolutionS from "src/resolutionSeed.json";
 //import Joi from "joi";
 
 class ResolutionController {
@@ -96,7 +94,7 @@ class ResolutionController {
 
   // static async seedResolution(req: Request, res: Response) {
   //   var Resolution = [];
-  //   for (const ordi of ResolutionS) {
+  //   for (const ordi of Resolutions) {
   //     const cashloanRef = await ResolutionMethods.createRef();
   //     const ResolutionData = new ResolutionBuilder({
   //       id: cashloanRef.doc.id,
@@ -119,7 +117,7 @@ class ResolutionController {
   //   const result = await ResolutionService.seed(Resolution);
   //   return res.status(200).json({
   //     status: 200,
-  //     message: "Orinances Seeded",
+  //     message: "Resolution Seeded",
   //     data: result,
   //   });
   // }
