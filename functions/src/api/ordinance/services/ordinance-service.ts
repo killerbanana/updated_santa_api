@@ -65,6 +65,56 @@ class OrdinanceService {
     };
   }
 
+  static async getByReading(pagination: PaginationQuery, reading: string) {
+    const docs = await OrdinanceMethods.getAllByReading(pagination, reading);
+
+    const ordinance: Array<OrdinanceModel> = [];
+
+    for (const data of docs) {
+      const ordinanceData = data.data();
+      ordinance.push(ordinanceData);
+    }
+
+    let last;
+
+    if (ordinance.length > 0) {
+      last = ordinance[ordinance.length - 1].id as string;
+    }
+
+    const getCount = await OrdinanceMethods.getCount();
+
+    return {
+      ordinance,
+      last: last,
+      getCount,
+    };
+  }
+
+  static async getByExtension(pagination: PaginationQuery, type: string) {
+    const docs = await OrdinanceMethods.getAllByExtension(pagination, type);
+
+    const ordinance: Array<OrdinanceModel> = [];
+
+    for (const data of docs) {
+      const ordinanceData = data.data();
+      ordinance.push(ordinanceData);
+    }
+
+    let last;
+
+    if (ordinance.length > 0) {
+      last = ordinance[ordinance.length - 1].id as string;
+    }
+
+    const getCount = await OrdinanceMethods.getCount();
+
+    return {
+      ordinance,
+      last: last,
+      getCount,
+    };
+  }
+
   static async seed(data: Array<OrdinanceBuilder>) {
     data.map(async (data: OrdinanceBuilder) => {
       const batch = firestore().batch();

@@ -33,8 +33,19 @@ export = () => {
         OrdinanceController.getAll,
         "OrdinanceController.getAll"
       );
-      //.middleware([DefaultAuth.handle]);
 
+      route.get(
+        "/reading",
+        OrdinanceController.getByReading,
+        "OrdinanceController.getAll"
+      );
+
+      route.get(
+        "/extension",
+        OrdinanceController.getByExtension,
+        "OrdinanceController.getAll"
+      );
+      //.middleware([DefaultAuth.handle]);
       // route.get(
       //   "/seed",
       //   OrdinanceController.seedOrdinance,

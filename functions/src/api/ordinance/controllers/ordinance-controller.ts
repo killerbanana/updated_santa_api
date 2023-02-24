@@ -92,6 +92,74 @@ class OrdinanceController {
     }
   }
 
+  static async getByReading(req: Request, res: Response) {
+    const { limit, sort, last, reading } = req.query;
+    const _sort = (sort as string).split("|");
+
+    const pagination: PaginationQuery = {
+      limit: +(limit as string),
+      sortField: _sort[0],
+      sortDirection: _sort[1],
+    };
+
+    if (last != "") {
+      pagination.last = last as string;
+    }
+
+    try {
+      const result = await OrdinanceService.getByReading(
+        pagination,
+        reading as string
+      );
+
+      return res.status(200).json({
+        status: 200,
+        message: "Ordinances",
+        data: result,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        status: 400,
+        message: "Error getting ordinance",
+        data: error,
+      });
+    }
+  }
+
+  static async getByExtension(req: Request, res: Response) {
+    const { limit, sort, last, extension } = req.query;
+    const _sort = (sort as string).split("|");
+
+    const pagination: PaginationQuery = {
+      limit: +(limit as string),
+      sortField: _sort[0],
+      sortDirection: _sort[1],
+    };
+
+    if (last != "") {
+      pagination.last = last as string;
+    }
+
+    try {
+      const result = await OrdinanceService.getByExtension(
+        pagination,
+        extension as string
+      );
+
+      return res.status(200).json({
+        status: 200,
+        message: "Ordinances",
+        data: result,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        status: 400,
+        message: "Error getting ordinance",
+        data: error,
+      });
+    }
+  }
+
   // static async seedOrdinance(req: Request, res: Response) {
   //   var ordinance = [];
   //   for (const ordi of ORDINANCES) {
