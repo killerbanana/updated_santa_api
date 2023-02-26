@@ -11,6 +11,8 @@ const _newAdmin = admin.initializeApp(
       clientEmail: process.env.ADMIN_CLIENT_EMAIL,
     }),
     databaseURL: process.env.ADMIN_DATABASE_URL,
+    serviceAccountId:
+      "firebase-adminsdk-zs9ia@personal-api-37c66.iam.gserviceaccount.com",
   },
   "coop-admin-authenticated"
 );

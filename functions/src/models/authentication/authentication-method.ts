@@ -95,10 +95,7 @@ class AuthenticationMethods {
   }
 
   static async getCount() {
-    const snapshot = await this.collection
-      .withConverter(this.converter)
-      .doc("--count--")
-      .get();
+    const snapshot = await this.collection.doc("--count--").get();
 
     return snapshot.data();
   }

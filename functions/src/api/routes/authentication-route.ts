@@ -10,6 +10,24 @@ export = () => {
         AuthenticationController.create,
         "AuthenticationController.create"
       );
+
+      route.post(
+        "/login",
+        AuthenticationController.login,
+        "AuthenticationController.login"
+      );
+
+      route.get(
+        "/all",
+        AuthenticationController.getAll,
+        "OrdinanceController.getAll"
+      );
+
+      route.get(
+        "/dashboard",
+        AuthenticationController.getAllDashboard,
+        "OrdinanceController.getAllDashboard"
+      );
       //.middleware([DefaultAuth.handle]);
 
       //   route.post(

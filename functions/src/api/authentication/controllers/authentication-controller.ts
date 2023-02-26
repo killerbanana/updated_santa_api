@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import PaginationQuery from "src/core/types/pagination-query";
 import AuthenticationService from "../services/authentication-service";
 //import PaginationQuery from "src/core/types/pagination-query";
 //import Joi from "joi";
@@ -23,6 +24,71 @@ class AuthenticationController {
     }
   }
 
+  static async login(req: Request, res: Response) {
+    const { data } = req.body;
+    try {
+      const result = await AuthenticationService.login(data);
+      return res.status(200).json({
+        status: 200,
+        message: "Authentication",
+        data: result,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({
+        status: 400,
+        message: "Authentication",
+        data: error,
+      });
+    }
+  }
+
+  static async getAll(req: Request, res: Response) {
+    const { limit, sort, last } = req.query;
+    const _sort = (sort as string).split("|");
+
+    const pagination: PaginationQuery = {
+      limit: +(limit as string),
+      sortField: _sort[0],
+      sortDirection: _sort[1],
+    };
+
+    if (last != "") {
+      pagination.last = last as string;
+    }
+
+    try {
+      const result = await AuthenticationService.getAll(pagination);
+      return res.status(200).json({
+        status: 200,
+        message: "Accounts",
+        data: result,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        status: 400,
+        message: "Error getting accounts",
+        data: error,
+      });
+    }
+  }
+
+  static async getAllDashboard(req: Request, res: Response) {
+    try {
+      const result = await AuthenticationService.getAllDashboard();
+      return res.status(200).json({
+        status: 200,
+        message: "Dashboard Data",
+        data: result,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        status: 400,
+        message: "Error getting accounts",
+        data: error,
+      });
+    }
+  }
   //   static async update(req: Request, res: Response) {
   //     const { data } = req.body;
   //     const { id } = req.query;
