@@ -3,6 +3,7 @@ import PaginationQuery from "src/core/types/pagination-query";
 import { AppropriationBuilder } from "src/models/appropriation/appropriation-builder";
 import { AppropriationModel } from "src/models/appropriation/appropriation-interface";
 import AppropriationMethods from "src/models/appropriation/appropriation-method";
+import { CountModel } from "src/models/authentication/count-interface";
 
 class AppropriationService {
   static async create(data: AppropriationBuilder) {
@@ -24,7 +25,18 @@ class AppropriationService {
       created: data.created,
       updated: data.created,
     });
+
+    const resoCountSnapshot = await AppropriationMethods.getCountSnapshot();
+    var getResoCount = await AppropriationMethods.getCount();
+    getResoCount = getResoCount as CountModel;
+
+    var updateCount = {
+      count: getResoCount.count + 1,
+    };
+
+    batch.set(resoCountSnapshot.ref, Object.assign({}, updateCount));
     batch.set(appropriationRef.doc, Object.assign({}, appropriationData));
+
     await batch.commit();
 
     return { appropriationData };
@@ -36,7 +48,21 @@ class AppropriationService {
   }
 
   static async delete(id: string) {
+    const batch = firestore().batch();
+
+    const resoCountSnapshot = await AppropriationMethods.getCountSnapshot();
+    var getResoCount = await AppropriationMethods.getCount();
+
+    getResoCount = getResoCount as CountModel;
+
+    var updateCount = {
+      count: getResoCount.count - 1,
+    };
+
+    batch.set(resoCountSnapshot.ref, Object.assign({}, updateCount));
     const appropriationRef = await AppropriationMethods.delete(id);
+
+    batch.commit();
     return { appropriationRef };
   }
 

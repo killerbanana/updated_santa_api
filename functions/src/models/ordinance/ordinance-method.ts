@@ -120,6 +120,12 @@ class OrdinanceMethods {
     return accounts.docs;
   }
 
+  static async getCountSnapshot() {
+    const snapshot = await this.collection.doc("--count--").get();
+
+    return snapshot;
+  }
+
   static async getCount() {
     const snapshot = await this.collection.doc("--count--").get();
 

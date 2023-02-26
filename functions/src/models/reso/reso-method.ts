@@ -84,10 +84,51 @@ class ResolutionMethods {
     return accounts.docs;
   }
 
+  static async getAllByReading(pagination: PaginationQuery, reading: string) {
+    const direction = pagination.sortDirection == "asc" ? "asc" : "desc";
+
+    let query = this.collection
+      .withConverter(this.converter)
+      .where("reading", "==", reading)
+      .orderBy(pagination.sortField, direction);
+
+    if (pagination.last) {
+      const last = await this.get(pagination.last as string);
+      query = query.startAfter(last);
+    }
+
+    const accounts = await query.limit(pagination.limit).get();
+
+    return accounts.docs;
+  }
+
+  static async getAllByExtension(pagination: PaginationQuery, type: string) {
+    const direction = pagination.sortDirection == "asc" ? "asc" : "desc";
+
+    let query = this.collection
+      .withConverter(this.converter)
+      .where("type", "==", type)
+      .orderBy(pagination.sortField, direction);
+
+    if (pagination.last) {
+      const last = await this.get(pagination.last as string);
+      query = query.startAfter(last);
+    }
+
+    const accounts = await query.limit(pagination.limit).get();
+
+    return accounts.docs;
+  }
+
   static async getCount() {
     const snapshot = await this.collection.doc("--count--").get();
-
     return snapshot.data();
+  }
+
+  static async getCountSnapshot() {
+    const snapshot = await this.collection.doc("--count--").get();
+
+    return snapshot;
   }
 }
 

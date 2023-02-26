@@ -1,5 +1,6 @@
 import { firestore } from "firebase-admin";
 import PaginationQuery from "src/core/types/pagination-query";
+import { CountModel } from "src/models/authentication/count-interface";
 import { OrdinanceBuilder } from "src/models/ordinance/ordinance-builder";
 import { OrdinanceModel } from "src/models/ordinance/ordinance-interface";
 import OrdinanceMethods from "src/models/ordinance/ordinance-method";
@@ -24,6 +25,16 @@ class OrdinanceService {
       created: data.created,
       updated: data.created,
     });
+    const resoCountSnapshot = await OrdinanceMethods.getCountSnapshot();
+    var getResoCount = await OrdinanceMethods.getCount();
+    getResoCount = getResoCount as CountModel;
+
+    var updateCount = {
+      count: getResoCount.count + 1,
+    };
+
+    batch.set(resoCountSnapshot.ref, Object.assign({}, updateCount));
+
     batch.set(ordinanceRef.doc, Object.assign({}, ordinanceData));
     await batch.commit();
 
@@ -36,7 +47,20 @@ class OrdinanceService {
   }
 
   static async delete(id: string) {
+    const batch = firestore().batch();
+
+    const resoCountSnapshot = await OrdinanceMethods.getCountSnapshot();
+    var getResoCount = await OrdinanceMethods.getCount();
+
+    getResoCount = getResoCount as CountModel;
+
+    var updateCount = {
+      count: getResoCount.count - 1,
+    };
+
+    batch.set(resoCountSnapshot.ref, Object.assign({}, updateCount));
     const ordinanceRef = await OrdinanceMethods.delete(id);
+    await batch.commit();
     return { ordinanceRef };
   }
 

@@ -94,6 +94,12 @@ class TricyMethods {
 
     return snapshot.data();
   }
+
+  static async getCountSnapshot() {
+    const snapshot = await this.collection.doc("--count--").get();
+
+    return snapshot;
+  }
 }
 
 export default TricyMethods;

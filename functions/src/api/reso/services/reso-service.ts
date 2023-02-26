@@ -1,5 +1,6 @@
 import { firestore } from "firebase-admin";
 import PaginationQuery from "src/core/types/pagination-query";
+import { CountModel } from "src/models/authentication/count-interface";
 import { ResolutionBuilder } from "src/models/reso/reso-builder";
 import { ResolutionModel } from "src/models/reso/reso-interface";
 import ResolutionMethods from "src/models/reso/reso-method";
@@ -24,6 +25,16 @@ class ResolutionService {
       created: data.created,
       updated: data.created,
     });
+
+    const resoCountSnapshot = await ResolutionMethods.getCountSnapshot();
+    var getResoCount = await ResolutionMethods.getCount();
+    getResoCount = getResoCount as CountModel;
+
+    var updateCount = {
+      count: getResoCount.count + 1,
+    };
+
+    batch.set(resoCountSnapshot.ref, Object.assign({}, updateCount));
     batch.set(ResolutionRef.doc, Object.assign({}, ResolutionData));
     await batch.commit();
     return { ResolutionData };
@@ -35,7 +46,23 @@ class ResolutionService {
   }
 
   static async delete(id: string) {
+    const batch = firestore().batch();
+
+    const resoCountSnapshot = await ResolutionMethods.getCountSnapshot();
+    var getResoCount = await ResolutionMethods.getCount();
+
+    getResoCount = getResoCount as CountModel;
+
+    var updateCount = {
+      count: getResoCount.count - 1,
+    };
+
+    batch.set(resoCountSnapshot.ref, Object.assign({}, updateCount));
+
     const resolutionRef = await ResolutionMethods.delete(id);
+
+    await batch.commit();
+
     return { resolutionRef };
   }
 
@@ -59,6 +86,56 @@ class ResolutionService {
 
     return {
       Resolution,
+      last: last,
+      getCount,
+    };
+  }
+
+  static async getByReading(pagination: PaginationQuery, reading: string) {
+    const docs = await ResolutionMethods.getAllByReading(pagination, reading);
+
+    const resolution: Array<ResolutionModel> = [];
+
+    for (const data of docs) {
+      const resolutionData = data.data();
+      resolution.push(resolutionData);
+    }
+
+    let last;
+
+    if (resolution.length > 0) {
+      last = resolution[resolution.length - 1].id as string;
+    }
+
+    const getCount = await ResolutionMethods.getCount();
+
+    return {
+      resolution,
+      last: last,
+      getCount,
+    };
+  }
+
+  static async getByExtension(pagination: PaginationQuery, type: string) {
+    const docs = await ResolutionMethods.getAllByExtension(pagination, type);
+
+    const resolution: Array<ResolutionModel> = [];
+
+    for (const data of docs) {
+      const ResolutionData = data.data();
+      resolution.push(ResolutionData);
+    }
+
+    let last;
+
+    if (resolution.length > 0) {
+      last = resolution[resolution.length - 1].id as string;
+    }
+
+    const getCount = await ResolutionMethods.getCount();
+
+    return {
+      resolution,
       last: last,
       getCount,
     };

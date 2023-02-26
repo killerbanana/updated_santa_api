@@ -34,6 +34,17 @@ export = () => {
         "ResolutionController.getAll"
       );
 
+      route.get(
+        "/reading",
+        ResolutionController.getByReading,
+        "ResolutionController.getAll"
+      );
+
+      route.get(
+        "/extension",
+        ResolutionController.getByExtension,
+        "ResolutionController.getAll"
+      );
       //.middleware([DefaultAuth.handle]);
 
       // route.get(
