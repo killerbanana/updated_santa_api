@@ -4,6 +4,7 @@ enum Collection {
   SANTA_RESOLUTION = "santa_resolutions",
   SANTA_APPROPRIATION = "santa_appropriations",
   SANTA_TRICY = "santa_tricy",
+  SANTA_SB = "santa_sb",
 }
 
 export default Collection;
