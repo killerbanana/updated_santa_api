@@ -1,22 +1,22 @@
 import { Request, Response } from "express";
-import SBService from "../services/sb-services";
+import CommitteeService from "../services/committee-services";
 import PaginationQuery from "src/core/types/pagination-query";
 //import Joi from "joi";
 
-class SBController {
+class CommitteeController {
   static async create(req: Request, res: Response) {
     const { data } = req.body;
     try {
-      const result = await SBService.create(data);
+      const result = await CommitteeService.create(data);
       return res.status(200).json({
         status: 200,
-        message: "SB",
+        message: "Committee",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "SB",
+        message: "Committee",
         data: error,
       });
     }
@@ -37,16 +37,16 @@ class SBController {
     }
 
     try {
-      const result = await SBService.getAll(pagination);
+      const result = await CommitteeService.getAll(pagination);
       return res.status(200).json({
         status: 200,
-        message: "SBs",
+        message: "Committees",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Error getting SB",
+        message: "Error getting Committee",
         data: error,
       });
     }
@@ -57,16 +57,16 @@ class SBController {
     const { id } = req.query;
     const _id = id as string;
     try {
-      const result = await SBService.update(data, _id);
+      const result = await CommitteeService.update(data, _id);
       return res.status(200).json({
         status: 200,
-        message: "Updated SB",
+        message: "Updated Committee",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Failed to update SB",
+        message: "Failed to update Committee",
         data: error,
       });
     }
@@ -77,16 +77,16 @@ class SBController {
     const _id = id as string;
     console.log(id);
     try {
-      const result = await SBService.delete(_id);
+      const result = await CommitteeService.delete(_id);
       return res.status(200).json({
         status: 200,
-        message: "Deleted SB",
+        message: "Deleted Committee",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Failed to delete SB",
+        message: "Failed to delete Committee",
         data: error,
       });
     }
@@ -107,20 +107,20 @@ class SBController {
     }
 
     try {
-      const result = await SBService.getByReading(
+      const result = await CommitteeService.getByReading(
         pagination,
         reading as string
       );
 
       return res.status(200).json({
         status: 200,
-        message: "SBs",
+        message: "Committees",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Error getting SB",
+        message: "Error getting Committee",
         data: error,
       });
     }
@@ -141,20 +141,20 @@ class SBController {
     }
 
     try {
-      const result = await SBService.getByExtension(
+      const result = await CommitteeService.getByExtension(
         pagination,
         extension as string
       );
 
       return res.status(200).json({
         status: 200,
-        message: "SBs",
+        message: "Committees",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Error getting SB",
+        message: "Error getting Committee",
         data: error,
       });
     }
@@ -163,17 +163,17 @@ class SBController {
   static async getById(req: Request, res: Response) {
     const { id } = req.query;
     try {
-      const result = await SBService.getById(id as string);
+      const result = await CommitteeService.getById(id as string);
 
       return res.status(200).json({
         status: 200,
-        message: "SBs",
+        message: "Committees",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Error getting SB",
+        message: "Error getting Committee",
         data: error,
       });
     }
@@ -182,32 +182,32 @@ class SBController {
   static async getByYear(req: Request, res: Response) {
     const { fromYear, toYear } = req.query;
     try {
-      const result = await SBService.getByYear(
+      const result = await CommitteeService.getByYear(
         fromYear as string,
         toYear as string
       );
 
       return res.status(200).json({
         status: 200,
-        message: "SBs",
+        message: "Committees",
         data: result,
       });
     } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "Error getting SB",
+        message: "Error getting Committee",
         data: error,
       });
     }
   }
 
-  // static async seedSB(req: Request, res: Response) {
-  //   var SB = [];
-  //   for (const ordi of SBs) {
-  //     const cashloanRef = await SBMethods.createRef();
-  //     const SBData = new SBBuilder({
+  // static async seedCommittee(req: Request, res: Response) {
+  //   var Committee = [];
+  //   for (const ordi of Committees) {
+  //     const cashloanRef = await CommitteeMethods.createRef();
+  //     const CommitteeData = new CommitteeBuilder({
   //       id: cashloanRef.doc.id,
-  //       SBNumber: ordi.SBNumber.toString(),
+  //       CommitteeNumber: ordi.CommitteeNumber.toString(),
   //       series: ordi.Series.toString(),
   //       date: ordi.Date,
   //       title: ordi.Title,
@@ -221,15 +221,15 @@ class SBController {
   //       created: ordi.Created,
   //       updated: ordi.Created,
   //     });
-  //     SB.push(SBData);
+  //     Committee.push(CommitteeData);
   //   }
-  //   const result = await SBService.seed(SB);
+  //   const result = await CommitteeService.seed(Committee);
   //   return res.status(200).json({
   //     status: 200,
-  //     message: "SB Seeded",
+  //     message: "Committee Seeded",
   //     data: result,
   //   });
   // }
 }
 
-export default SBController;
+export default CommitteeController;

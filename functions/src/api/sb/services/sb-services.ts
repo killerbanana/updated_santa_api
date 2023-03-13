@@ -140,6 +140,38 @@ class SBService {
     };
   }
 
+  static async getById(Id: string) {
+    const result = await SBMethods.getById(Id);
+    return {
+      result,
+    };
+  }
+
+  static async getByYear(fromYear: string, toYear: string) {
+    const docs = await SBMethods.getByYear(fromYear, toYear);
+
+    const SB: Array<SBModel> = [];
+
+    for (const data of docs) {
+      const SBData = data.data();
+      SB.push(SBData);
+    }
+
+    let last;
+
+    if (SB.length > 0) {
+      last = SB[SB.length - 1].id as string;
+    }
+
+    const getCount = await SBMethods.getCount();
+
+    return {
+      SB,
+      last: last,
+      getCount,
+    };
+  }
+
   static async seed(data: Array<SBBuilder>) {
     data.map(async (data: SBBuilder) => {
       const batch = firestore().batch();

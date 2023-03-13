@@ -24,6 +24,10 @@ export = () => {
         SBController.getByExtension,
         "SBController.getAll"
       );
+
+      route.get("/id", SBController.getById, "SBController.getAll");
+
+      route.get("/year", SBController.getByYear, "SBController.getAll");
       //.middleware([DefaultAuth.handle]);
 
       // route.get(

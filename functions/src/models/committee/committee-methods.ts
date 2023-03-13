@@ -3,15 +3,15 @@ import { firestore } from "firebase-admin";
 import Collection from "src/core/enums/collections";
 import BadRequest from "src/core/exceptions/bad-request";
 import PaginationQuery from "src/core/types/pagination-query";
-import { SBBuilder } from "./sb-builder";
-import { SBModel } from "./sb-interface";
-class SBMethods {
+import { CommitteeBuilder } from "./committee-builder";
+import { CommitteeModel } from "./committee-interface";
+class CommitteeMethods {
   static collection: _firestore.CollectionReference = firestore().collection(
-    `${Collection.SANTA_SB}`
+    `${Collection.SANTA_COMMITTEE}`
   );
 
   static converter = {
-    toFirestore(data: SBModel): FirebaseFirestore.DocumentData {
+    toFirestore(data: CommitteeModel): FirebaseFirestore.DocumentData {
       return data;
     },
     fromFirestore: (snapshot: FirebaseFirestore.QueryDocumentSnapshot) => {
@@ -20,7 +20,7 @@ class SBMethods {
       return {
         id: snapshot.id,
         ...data,
-      } as SBModel;
+      } as CommitteeModel;
     },
   };
 
@@ -37,25 +37,20 @@ class SBMethods {
     const snapshot = await this.collection.doc(docId).get();
 
     if (!snapshot.exists)
-      throw new BadRequest(`No records found`, "SBMethod.get");
+      throw new BadRequest(`No records found`, "CommitteeMethod.get");
 
     return snapshot;
   }
 
-  static async update(data: SBBuilder, id: string) {
+  static async update(data: CommitteeBuilder, id: string) {
     const doc = await this.collection.doc(id).update({
-      firstName: data.firstName,
-      middleName: data.middleName,
-      lastName: data.lastName,
-      suffix: data.suffix,
-      birthday: data.birthday,
-      gender: data.gender,
-      address: data.address,
-      contactNumber: data.contactNumber,
-      position: data.position,
-      title: data.title,
       fromYear: data.fromYear,
       toYear: data.toYear,
+      title: data.title,
+      description: data.description,
+      chairman: data.chairman,
+      viceChairman: data.viceChairman,
+      members: data.members,
     });
     return doc;
   }
@@ -150,4 +145,4 @@ class SBMethods {
   }
 }
 
-export default SBMethods;
+export default CommitteeMethods;
