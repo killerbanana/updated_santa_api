@@ -1,6 +1,7 @@
 import AppropriationController from "src/api/appropriation/controllers/appropriation-controller";
 import { Route } from "src/core/router/route";
 import AppropriationCreateValidator from "../appropriation/validators/appropriation-validator";
+// import Auth from "src/core/middlewares/auth";
 
 export = () => {
   const route = new Route();
@@ -33,6 +34,7 @@ export = () => {
         AppropriationController.getAll,
         "appropriationController.getAll"
       );
+      // .middleware([Auth.handle]);
       //.middleware([DefaultAuth.handle]);
 
       // route.get(

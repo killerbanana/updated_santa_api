@@ -1,5 +1,5 @@
 import { BaseError } from "./base-error";
-import { HttpStatusCode } from "src/core/enums/http-status-code";
+import { HttpStatusCode } from "src/core/http-status-code";
 
 class BadRequest extends BaseError {
   constructor(description: string, methodName: string = "") {

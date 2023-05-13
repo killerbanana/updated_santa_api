@@ -28,34 +28,6 @@ export = () => {
         AuthenticationController.getAllDashboard,
         "OrdinanceController.getAllDashboard"
       );
-      //.middleware([DefaultAuth.handle]);
-
-      //   route.post(
-      //     "/update",
-      //     AuthenticationController.update,
-      //     "AuthenticationController.update"
-      //   );
-      //   //.validator([OrdinanceCreateValidator.handle]);
-
-      //   route.put(
-      //     "/delete",
-      //     AuthenticationController.delete,
-      //     "AuthenticationController.delete"
-      //   );
-
-      //   route.get(
-      //     "/all",
-      //     AuthenticationController.getAll,
-      //     "AuthenticationController.getAll"
-      //   );
-
-      //.middleware([DefaultAuth.handle]);
-
-      // route.get(
-      //   "/seed",
-      //   ResolutionController.seedResolution,
-      //   "ResolutionController.getAll"
-      // );
     })
     .prefix("/authentication")
     .namespace("authentication/controller");
