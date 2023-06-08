@@ -3,15 +3,15 @@ import { firestore } from "firebase-admin";
 import Collection from "src/core/enums/collections";
 import BadRequest from "src/core/exceptions/bad-request";
 import PaginationQuery from "src/core/types/pagination-query";
-import { AuthenticationModel } from "./authentication-interface";
-import { AuthenticationBuilder } from "./authentication-builder";
-class AuthenticationMethods {
+import { MinutesModel } from "./minutes-interface";
+import { MinutesBuilder } from "./minutes-builder";
+class MinutesMethods {
   static collection: _firestore.CollectionReference = firestore().collection(
-    `${Collection.SANTA_AUTH}`
+    `${Collection.SANTA_MINUTES}`
   );
 
   static converter = {
-    toFirestore(data: AuthenticationModel): FirebaseFirestore.DocumentData {
+    toFirestore(data: MinutesModel): FirebaseFirestore.DocumentData {
       return data;
     },
     fromFirestore: (snapshot: FirebaseFirestore.QueryDocumentSnapshot) => {
@@ -20,7 +20,7 @@ class AuthenticationMethods {
       return {
         id: snapshot.id,
         ...data,
-      } as AuthenticationModel;
+      } as MinutesModel;
     },
   };
 
@@ -43,13 +43,17 @@ class AuthenticationMethods {
     }
     return [];
   }
-    static async update(data: AuthenticationBuilder, id: string) {
-      const doc = await this.collection.doc(id).update({
-        role: data.role,
-        privileges: data.privileges,
-      });
-      return doc;
-    }
+  static async update(data: MinutesBuilder, id: string) {
+    const doc = await this.collection.doc(id).update({
+      filePath: data.filePath,
+      date: data.date,
+      time: data.time,
+      title: data.title,
+      agenda: data.agenda,
+      venue: data.venue,
+    });
+    return doc;
+  }
 
   static async delete(id: string) {
     const doc = await this.collection.doc(id).delete();
@@ -61,11 +65,11 @@ class AuthenticationMethods {
     const snapshot = await this.collection.doc(docId).get();
 
     if (!snapshot.exists)
-      throw new BadRequest(`No records found`, "OrdinanceMethod.get");
+      throw new BadRequest(`No records found`, "MinutesMethod.get");
 
     return snapshot;
   }
- 
+
   static async getAll(pagination: PaginationQuery) {
     const direction = pagination.sortDirection == "asc" ? "asc" : "desc";
 
@@ -90,4 +94,4 @@ class AuthenticationMethods {
   }
 }
 
-export default AuthenticationMethods;
+export default MinutesMethods;

@@ -40,10 +40,13 @@ class AuthenticationService {
       gender: data.gender,
       address: data.address,
       contactNumber: data.contactNumber,
+      filePath: data.filePath,
+      privileges: data.privileges,
+      role: data.role,
+     
     });
     batch.set(authenticationRef.doc, Object.assign({}, authenticationData));
     await batch.commit();
-
     return { authenticationData };
   }
 
@@ -56,12 +59,16 @@ class AuthenticationService {
         "AuthenticationMethods.get"
       );
     }
-
+  
     const validPass = await bcrypt.compare(
       data.password,
       getUsername[0].data().password
     );
-
+      const privileges = getUsername[0].data().privileges
+      const role = getUsername[0].data().role
+      const firstName = getUsername[0].data().firstName
+      const lastName = getUsername[0].data().lastName
+      const filePath = getUsername[0].data().filePath
     if (!validPass)
       throw new BadRequest(
         `Username or password invalid=${data.username}.`,
@@ -78,7 +85,7 @@ class AuthenticationService {
       expiresIn: process.env.JWT_EXP,
     });
 
-    return { success: token };
+    return { success: token, privileges:  privileges, role: role, firstName: firstName, lastName: lastName, filePath: filePath };
   }
 
   static async getAll(pagination: PaginationQuery) {
@@ -105,7 +112,7 @@ class AuthenticationService {
       getCount,
     };
   }
-
+ 
   static async getAllDashboard() {
     var authCount = await AuthenticationMethods.getCount();
     authCount = authCount as CountModel;
@@ -133,16 +140,17 @@ class AuthenticationService {
       appropriationCount: appropriationCount.count,
     };
   }
+  static async delete(id: string) {
+    const authRef = await AuthenticationMethods.delete(id);
+    return { authRef };
+  }
 
-  //   static async update(data: OrdinanceBuilder, id: string) {
-  //     const ordinanceRef = await OrdinanceMethods.update(data, id);
-  //     return { ordinanceRef };
-  //   }
+    static async update(data: AuthenticationBuilder, id: string) {
+      const authRef = await AuthenticationMethods.update(data, id);
+      return { authRef };
+    }
 
-  //   static async delete(id: string) {
-  //     const ordinanceRef = await OrdinanceMethods.delete(id);
-  //     return { ordinanceRef };
-  //   }
+    
 
   //   static async getAll(pagination: PaginationQuery) {
   //     const docs = await OrdinanceMethods.getAll(pagination);

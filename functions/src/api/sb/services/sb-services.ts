@@ -23,6 +23,8 @@ class SBService {
       title: data.title,
       fromYear: data.fromYear,
       toYear: data.toYear,
+      rank: data.rank,
+      filePath: data.filePath
     });
 
     const sbCountSnapshot = await SBMethods.getCountSnapshot();

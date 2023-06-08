@@ -14,6 +14,8 @@ interface SBBuilderInterface extends SBModel {
   title: string;
   fromYear: string;
   toYear: string;
+  rank: string;
+  filePath: string;
 }
 
 export class SBBuilder implements SBBuilderInterface {
@@ -30,6 +32,8 @@ export class SBBuilder implements SBBuilderInterface {
   title: string = "";
   fromYear: string = "";
   toYear: string = "";
+  rank: string = "";
+  filePath: string = "";
 
   constructor(SB: SBBuilderInterface) {
     if (SB.id) this.id = SB.id;
@@ -38,6 +42,7 @@ export class SBBuilder implements SBBuilderInterface {
     const { birthday, gender, address, contactNumber } = SB;
     const { position, title } = SB;
     const { fromYear, toYear } = SB;
+    const { rank, filePath } = SB;
 
     this.firstName = firstName;
     this.middleName = middleName;
@@ -55,5 +60,8 @@ export class SBBuilder implements SBBuilderInterface {
 
     this.fromYear = fromYear;
     this.toYear = toYear;
+
+    this.rank = rank;
+    this.filePath = filePath;
   }
 }

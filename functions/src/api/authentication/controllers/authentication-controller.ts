@@ -72,7 +72,7 @@ class AuthenticationController {
       });
     }
   }
-
+ 
   static async getAllDashboard(req: Request, res: Response) {
     try {
       const result = await AuthenticationService.getAllDashboard();
@@ -89,45 +89,44 @@ class AuthenticationController {
       });
     }
   }
-  //   static async update(req: Request, res: Response) {
-  //     const { data } = req.body;
-  //     const { id } = req.query;
-  //     const _id = id as string;
-  //     try {
-  //       const result = await OrdinanceService.update(data, _id);
-  //       return res.status(200).json({
-  //         status: 200,
-  //         message: "Updated ordinance",
-  //         data: result,
-  //       });
-  //     } catch (error) {
-  //       return res.status(400).json({
-  //         status: 400,
-  //         message: "Failed to update ordinances",
-  //         data: error,
-  //       });
-  //     }
-  //   }
-
-  //   static async delete(req: Request, res: Response) {
-  //     const { id } = req.query;
-  //     const _id = id as string;
-  //     console.log(id);
-  //     try {
-  //       const result = await OrdinanceService.delete(_id);
-  //       return res.status(200).json({
-  //         status: 200,
-  //         message: "Deleted ordinance",
-  //         data: result,
-  //       });
-  //     } catch (error) {
-  //       return res.status(400).json({
-  //         status: 400,
-  //         message: "Failed to delete ordinance",
-  //         data: error,
-  //       });
-  //     }
-  //   }
+  static async delete(req: Request, res: Response) {
+    const { id } = req.query;
+    const _id = id as string;
+    console.log(id);
+    try {
+      const result = await AuthenticationService.delete(_id);
+      return res.status(200).json({
+        status: 200,
+        message: "Deleted ordinance",
+        data: result,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        status: 400,
+        message: "Failed to delete ordinance",
+        data: error,
+      });
+    }
+  }
+    static async update(req: Request, res: Response) {
+      const { data } = req.body;
+      const { id } = req.query;
+      const _id = id as string;
+      try {
+        const result = await AuthenticationService.update(data, _id);
+        return res.status(200).json({
+          status: 200,
+          message: "Updated ordinance",
+          data: result,
+        });
+      } catch (error) {
+        return res.status(400).json({
+          status: 400,
+          message: "Failed to update ordinances",
+          data: error,
+        });
+      }
+    }
 
   //   static async getAll(req: Request, res: Response) {
   //     const { limit, sort, last } = req.query;

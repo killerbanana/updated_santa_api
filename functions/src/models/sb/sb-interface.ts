@@ -12,4 +12,6 @@ export interface SBModel {
   title: string;
   fromYear: string;
   toYear: string;
+  rank: string;
+  filePath: string;
 }

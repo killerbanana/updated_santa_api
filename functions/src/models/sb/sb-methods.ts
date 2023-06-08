@@ -56,6 +56,8 @@ class SBMethods {
       title: data.title,
       fromYear: data.fromYear,
       toYear: data.toYear,
+      rank: data.rank,
+      filePath: data.filePath
     });
     return doc;
   }

@@ -46,7 +46,7 @@ export class TricyBuilder implements TricyBuilderInterface {
     if (Tricy.id) this.id = Tricy.id;
 
     const { name, barangay, civilStatus, reason } = Tricy;
-    const { make, motorNo, chassisNo, plateNo, noOfUnits } = Tricy;
+    const { make, motorNo, chassisNo, plateNo, noOfUnits, orNo } = Tricy;
     const {
       franchiseNo,
       taxCert,
@@ -73,6 +73,7 @@ export class TricyBuilder implements TricyBuilderInterface {
     this.taxCert = taxCert;
     this.dateFranchise = dateFranchise;
     this.year = year;
+    this.orNo = orNo;
     this.status = status;
     this.fee = fee;
     this.created = created;

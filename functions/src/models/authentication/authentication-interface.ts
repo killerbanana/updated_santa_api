@@ -10,4 +10,7 @@ export interface AuthenticationModel {
   gender: string;
   address: string;
   contactNumber: string;
+  filePath: string;
+  privileges: Array<String>;
+  role: string;
 }

@@ -5,6 +5,7 @@ import tricyRoute from "./tricy-routes";
 import authenticationRoute from "./authentication-route";
 import sbRoutes from "./sb-routes";
 import committeeRoutes from "./committee-routes";
+import minutesRoutes from "./minutes-routes";
 
 export = () => {
   ordinanceRoute();
@@ -14,4 +15,5 @@ export = () => {
   authenticationRoute();
   sbRoutes();
   committeeRoutes();
+  minutesRoutes();
 };

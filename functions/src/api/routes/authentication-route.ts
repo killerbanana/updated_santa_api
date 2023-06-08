@@ -20,13 +20,23 @@ export = () => {
       route.get(
         "/all",
         AuthenticationController.getAll,
-        "OrdinanceController.getAll"
+        "AuthenticationController.getAll"
       );
 
       route.get(
         "/dashboard",
         AuthenticationController.getAllDashboard,
-        "OrdinanceController.getAllDashboard"
+        "AuthenticationController.getAllDashboard"
+      );
+      route.put(
+        "/delete",
+        AuthenticationController.delete,
+        "AuthenticationController.delete"
+      );
+      route.post(
+        "/update",
+        AuthenticationController.update,
+        "appropriationController.update"
       );
     })
     .prefix("/authentication")

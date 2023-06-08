@@ -12,6 +12,9 @@ interface AuthenticationBuilderInterface extends AuthenticationModel {
   gender: string;
   address: string;
   contactNumber: string;
+  filePath: string;
+  privileges: Array<string>;
+  role: string;
 }
 
 export class AuthenticationBuilder implements AuthenticationBuilderInterface {
@@ -26,14 +29,17 @@ export class AuthenticationBuilder implements AuthenticationBuilderInterface {
   gender: string = "";
   address: string = "";
   contactNumber: string = "";
+  filePath: string = "";
+  privileges: Array<string> = [];
+  role: string = "";
 
   constructor(authentication: AuthenticationBuilderInterface) {
     if (authentication.id) this.id = authentication.id;
 
     const { id, username, password } = authentication;
     const { firstName, middleName, lastName, suffix } = authentication;
-    const { birthday, gender, address, contactNumber } = authentication;
-
+    const { birthday, gender, address, contactNumber, filePath, privileges, role} = authentication;
+    
     this.id = id;
     this.username = username;
     this.password = password;
@@ -47,5 +53,8 @@ export class AuthenticationBuilder implements AuthenticationBuilderInterface {
     this.gender = gender;
     this.address = address;
     this.contactNumber = contactNumber;
+    this.filePath = filePath;
+    this.privileges = privileges;
+    this.role = role;
   }
 }
